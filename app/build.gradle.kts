@@ -27,7 +27,7 @@ android {
         outputs.all {
             val variantName = name
             val verName = versionName ?: "1.0.0"
-            val newApkName = "IDDoc-$variantName-$verName.apk"
+            val newApkName = "iddoc-$variantName-$verName.apk"
             (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName = newApkName
         }
     }
