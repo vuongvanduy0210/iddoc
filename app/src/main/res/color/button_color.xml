@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Màu cho button khi được enable -->
+    <item android:color="@color/color_enabled" android:state_enabled="true"/>
+
+    <!-- Màu cho button khi được disable -->
+    <item android:color="@color/color_disabled" android:state_enabled="false"/>
+
+    <!-- Màu cho button khi button đang được nhấn -->
+    <item android:color="@color/color_pressed" android:state_pressed="true"/>
+</selector>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray">#E6E6E6</color>
+    <color name="textSecondary">#494949</color>
+    <color name="colorApproved">#17A626</color>
+    <color name="colorStaging">#CD9921</color>
+
+    <color name="primary_color">#2C3D7A</color>
+
+    <color name="color_enabled">#2C3D7A</color> <!-- Màu khi button được enable -->
+    <color name="color_disabled">#A6A6A6</color> <!-- Màu khi button bị disable -->
+    <color name="color_pressed">#FFFFFFFF</color> <!-- Màu khi button đang được nhấn -->
+</resources>

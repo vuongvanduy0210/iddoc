@@ -1,0 +1,26 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.IDDoc" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+         <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="Theme.IDDoc" parent="Base.Theme.IDDoc" />
+
+    <style name="Theme.Main.Popup" parent="android:style/Theme.Translucent">
+        <!--No title        -->
+        <item name="windowNoTitle">true</item>
+
+        <!--Full screen        -->
+        <item name="android:windowFullscreen">true</item>
+
+        <!--Overlay content        -->
+        <item name="android:windowContentOverlay">@null</item>
+
+        <item name="android:backgroundDimEnabled">true</item>
+
+        <!--Hide soft keyboard if needed       -->
+        <item name="android:windowSoftInputMode">adjustResize|stateAlwaysHidden</item>
+    </style>
+</resources>

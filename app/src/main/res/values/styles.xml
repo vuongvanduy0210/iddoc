@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Base.TextInputLayout" parent="Text.Body.Regular">
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxCornerRadiusTopStart">16dp</item>
+        <item name="boxCornerRadiusTopEnd">16dp</item>
+        <item name="boxCornerRadiusBottomStart">16dp</item>
+        <item name="boxCornerRadiusBottomEnd">16dp</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeColor">#A6A6A6</item>
+        <item name="hintTextColor">#A6A6A6</item>
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Base.Button" parent="Text.Caption.Bold">
+        <item name="android:textAllCaps">false</item>
+        <item name="background">@drawable/bg_corner</item>
+        <item name="backgroundTint">@color/primary_color</item>
+    </style>
+</resources>
