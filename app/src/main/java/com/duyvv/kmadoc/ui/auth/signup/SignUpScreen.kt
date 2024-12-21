@@ -23,7 +23,7 @@ import com.duyvv.kmadoc.R
 import com.duyvv.kmadoc.ui.component.BaseButton
 import com.duyvv.kmadoc.ui.component.BaseHeaderView
 import com.duyvv.kmadoc.ui.component.PasswordTextField
-import com.duyvv.kmadoc.ui.createform.forminfo.BaseInputTextFiled
+import com.duyvv.kmadoc.ui.component.BaseInputTextFiled
 import com.duyvv.kmadoc.util.nonAimClickable
 
 @Composable

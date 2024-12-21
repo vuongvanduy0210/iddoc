@@ -17,6 +17,8 @@ import android.text.style.ClickableSpan
 import android.view.MotionEvent
 import android.view.TouchDelegate
 import android.view.View
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import com.duyvv.kmadoc.R
@@ -107,6 +109,34 @@ fun View.fadInAnimation(duration: Long = 300, completion: (() -> Unit)? = null) 
                 it()
             }
         }
+}
+
+fun View.animateViewFromBottom() {
+    translationY = height.toFloat()
+    alpha = 0f
+    visibility = View.VISIBLE
+
+    animate()
+        .translationY(0f)
+        .alpha(1f)
+        .setDuration(300)
+        .setInterpolator(DecelerateInterpolator())
+        .withEndAction {
+            visibility = View.VISIBLE
+        }
+        .start()
+}
+
+fun View.hideViewToTop() {
+    animate()
+        .translationY(height.toFloat())
+        .alpha(0f)
+        .setDuration(300)
+        .setInterpolator(AccelerateInterpolator())
+        .withEndAction {
+            visibility = View.GONE
+        }
+        .start()
 }
 
 fun TextView.setTextAnimation(

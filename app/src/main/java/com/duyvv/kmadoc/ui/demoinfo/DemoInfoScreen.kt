@@ -31,7 +31,7 @@ import com.duyvv.kmadoc.data.model.FormModel
 import com.duyvv.kmadoc.data.model.FormStatus
 import com.duyvv.kmadoc.data.model.FormType
 import com.duyvv.kmadoc.ui.component.BaseButton
-import com.duyvv.kmadoc.ui.createform.forminfo.BaseInputTextFiled
+import com.duyvv.kmadoc.ui.component.BaseInputTextFiled
 import com.duyvv.kmadoc.ui.createform.forminfo.GenderPicker
 import com.duyvv.kmadoc.util.APPLICATION_DISTRICT_DATE
 import com.duyvv.kmadoc.util.CONTENT
