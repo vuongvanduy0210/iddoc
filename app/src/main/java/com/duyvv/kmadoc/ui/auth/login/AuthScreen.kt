@@ -53,7 +53,7 @@ fun AuthScreen(
             modifier = modifier
                 .fillMaxSize()
                 .padding(horizontal = 36.dp)
-                .padding(top = 20.dp),
+                .padding(top = 25.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {

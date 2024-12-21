@@ -17,6 +17,7 @@ import com.duyvv.kmadoc.ui.demoinfo.DemoInfoFragment.Companion.SCREEN_TYPE_KEY
 import com.duyvv.kmadoc.ui.demoinfo.DemoScreenType
 import com.duyvv.kmadoc.ui.selectform.SelectFormTypeFragment.Companion.FORM_TYPE_KEY
 import com.duyvv.kmadoc.util.fromJson
+import com.duyvv.kmadoc.util.showFullScreenImage
 import com.duyvv.kmadoc.util.toJson
 import com.google.mlkit.vision.documentscanner.GmsDocumentScannerOptions
 import com.google.mlkit.vision.documentscanner.GmsDocumentScannerOptions.RESULT_FORMAT_JPEG
@@ -104,6 +105,12 @@ class CameraFragment : BaseFragment<FragmentCameraBinding, CameraViewModel>(
 
         binding.btScan.setOnClickListener {
             startCameraView()
+        }
+
+        binding.imageView.setOnClickListener {
+            viewModel.imageUri.value?.let {
+                showFullScreenImage(requireContext(), imageUri = it)
+            }
         }
 
         binding.btContinue.setOnClickListener {

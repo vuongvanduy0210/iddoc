@@ -24,7 +24,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding, AuthViewModel>(
     override fun addAction() {
         super.addAction()
         binding.btSignOut.setOnClickListener {
-            SharePreferenceExt.username = ""
             SharePreferenceExt.password = ""
             SharePreferenceExt.token = ""
 
