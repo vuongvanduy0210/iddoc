@@ -7,62 +7,62 @@
 
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="com.duyvv.iddoc.ui.camera.CameraFragment"
+        android:name="com.duyvv.kmadoc.ui.camera.CameraFragment"
         android:label="CameraFragment"
         tools:layout="@layout/fragment_camera" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.duyvv.iddoc.ui.home.HomeFragment"
+        android:name="com.duyvv.kmadoc.ui.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.duyvv.iddoc.ui.setting.SettingFragment"
+        android:name="com.duyvv.kmadoc.ui.setting.SettingFragment"
         android:label="SettingFragment"
         tools:layout="@layout/fragment_setting" />
     <fragment
         android:id="@+id/authFragment"
-        android:name="com.duyvv.iddoc.ui.auth.login.AuthFragment"
+        android:name="com.duyvv.kmadoc.ui.auth.login.AuthFragment"
         android:label="AuthFragment"
         tools:layout="@layout/fragment_auth" />
     <fragment
         android:id="@+id/cameraResultFragment"
-        android:name="com.duyvv.iddoc.ui.camera.cameraresult.CameraResultFragment"
+        android:name="com.duyvv.kmadoc.ui.camera.cameraresult.CameraResultFragment"
         android:label="CameraResultFragment"
         tools:layout="@layout/fragment_camera_result" />
     <fragment
         android:id="@+id/fragmentConfigDomain"
-        android:name="com.duyvv.iddoc.ui.setting.ConfigDomainFragment"
+        android:name="com.duyvv.kmadoc.ui.setting.ConfigDomainFragment"
         android:label="FragmentConfigDomain"
         tools:layout="@layout/fragment_config_domain" />
     <fragment
         android:id="@+id/cropImageFragment"
-        android:name="com.duyvv.iddoc.ui.camera.crop.CropImageFragment"
+        android:name="com.duyvv.kmadoc.ui.camera.crop.CropImageFragment"
         android:label="CropImageFragment"
         tools:layout="@layout/fragment_crop_image" />
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.duyvv.iddoc.ui.auth.signup.SignInFragment"
+        android:name="com.duyvv.kmadoc.ui.auth.signup.SignInFragment"
         android:label="SignInFragment"
         tools:layout="@layout/fragment_sign_in" />
     <fragment
         android:id="@+id/listFormFragment"
-        android:name="com.duyvv.iddoc.ui.list_form.ListFormFragment"
+        android:name="com.duyvv.kmadoc.ui.list_form.ListFormFragment"
         android:label="FragmentFileResult" />
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.duyvv.iddoc.ui.splash.SplashFragment"
+        android:name="com.duyvv.kmadoc.ui.splash.SplashFragment"
         android:label="SplashFragment" />
     <fragment
         android:id="@+id/createFormFragment"
-        android:name="com.duyvv.iddoc.ui.createform.forminfo.CreateFormFragment"
+        android:name="com.duyvv.kmadoc.ui.createform.forminfo.CreateFormFragment"
         android:label="CreateFormFragment" />
     <fragment
         android:id="@+id/selectFormTypeFragment"
-        android:name="com.duyvv.iddoc.ui.selectform.SelectFormTypeFragment"
+        android:name="com.duyvv.kmadoc.ui.selectform.SelectFormTypeFragment"
         android:label="SelectFormTypeFragment" />
     <fragment
         android:id="@+id/demoInfoFragment"
-        android:name="com.duyvv.iddoc.ui.demoinfo.DemoInfoFragment"
+        android:name="com.duyvv.kmadoc.ui.demoinfo.DemoInfoFragment"
         android:label="DemoInfoFragment" />
 </navigation>

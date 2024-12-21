@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "IDDoc"
+rootProject.name = "KMADoc"
 include(":app")
  

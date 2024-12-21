@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.scope.ProjectInfo.Companion.getBaseName
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -7,11 +9,11 @@ plugins {
 }
 
 android {
-    namespace = "com.duyvv.iddoc"
+    namespace = "com.duyvv.kmadoc"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.duyvv.iddoc"
+        applicationId = "com.duyvv.kmadoc"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -27,7 +29,7 @@ android {
         outputs.all {
             val variantName = name
             val verName = versionName ?: "1.0.0"
-            val newApkName = "iddoc-$variantName-$verName.apk"
+            val newApkName = "kmadoc-$variantName-$verName.apk"
             (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName = newApkName
         }
     }
