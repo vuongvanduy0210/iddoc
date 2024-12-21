@@ -23,6 +23,15 @@ android {
         }
     }
 
+    applicationVariants.all {
+        outputs.all {
+            val variantName = name
+            val verName = versionName ?: "1.0.0"
+            val newApkName = "IDDoc-$variantName-$verName.apk"
+            (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName = newApkName
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
