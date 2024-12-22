@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.IdRes
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -65,8 +66,10 @@ abstract class BaseFragment<VB : ViewBinding, ViewModel : BaseViewModel>(
                     }
                 }
             })
+    }
 
-
+    fun showDialog(dialog: DialogFragment) {
+        dialog.show(parentFragmentManager, null)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -100,7 +103,6 @@ abstract class BaseFragment<VB : ViewBinding, ViewModel : BaseViewModel>(
     protected open fun handleState(state: MviState) = Unit
     protected open fun initViewModel() {}
     protected open fun addObserver() {}
-    protected abstract fun getLayoutId(): Int
     protected open fun initView() {}
     protected open fun addAction() {}
     open fun initData() {}

@@ -53,6 +53,7 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
+        dataBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -101,4 +102,5 @@ dependencies {
     implementation(libs.document.scanner)
     implementation(libs.cloudinary)
     implementation(libs.constraintlayout)
+    implementation(libs.chart)
 }

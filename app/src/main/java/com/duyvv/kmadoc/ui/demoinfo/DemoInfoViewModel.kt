@@ -7,10 +7,13 @@ import com.duyvv.kmadoc.data.dto.request.UploadFormRequest
 import com.duyvv.kmadoc.data.model.FormModel
 import com.duyvv.kmadoc.data.model.FormType
 import com.duyvv.kmadoc.data.model.FormTypeModel
+import com.duyvv.kmadoc.data.usecase.CreateFormUseCase
 import com.duyvv.kmadoc.data.usecase.DeleteFormUseCase
 import com.duyvv.kmadoc.data.usecase.UpdateFormUseCase
 import com.duyvv.kmadoc.data.usecase.UpdateStatusFormUseCase
 import com.duyvv.kmadoc.data.usecase.UploadFormUseCase
+import com.duyvv.kmadoc.ui.createform.forminfo.CreateFormContract
+import com.duyvv.kmadoc.util.SharePreferenceExt
 import com.duyvv.kmadoc.util.onEachError
 import com.duyvv.kmadoc.util.toBaseCreateFormRequest
 import com.duyvv.kmadoc.util.toContinueStudyRequest
@@ -33,7 +36,8 @@ class DemoInfoViewModel @Inject constructor(
     private val updateStatusFormUseCase: UpdateStatusFormUseCase,
     private val uploadFormUseCase: UploadFormUseCase,
     private val updateFormUseCase: UpdateFormUseCase,
-    private val deleteFormUseCase: DeleteFormUseCase
+    private val deleteFormUseCase: DeleteFormUseCase,
+    private val createFormUseCase: CreateFormUseCase
 ) : BaseViewModel() {
 
     private val _formModel = MutableStateFlow(FormModel())
@@ -128,5 +132,21 @@ class DemoInfoViewModel @Inject constructor(
                 _formModel.value.toBaseCreateFormRequest()
             }
         }
+    }
+
+    fun createForm(formTypeModel: FormTypeModel) {
+        showLoading(true)
+        val userId = SharePreferenceExt.userInfo.userId
+        createFormUseCase.execute(
+            studentId = userId,
+            formId = formTypeModel.id,
+            body = getCreateFormRequest(formTypeModel.type)
+        ).onEachError {
+            showLoading(false)
+            showError(it)
+        }.onEach {
+            showLoading(false)
+            setState(CreateFormContract.FormInfoState.CreateFormSuccess)
+        }.launchIn(viewModelScopeExceptionHandler)
     }
 }

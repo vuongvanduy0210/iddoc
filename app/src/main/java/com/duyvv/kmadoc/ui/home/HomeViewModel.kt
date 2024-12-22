@@ -1,12 +1,10 @@
 package com.duyvv.kmadoc.ui.home
 
 import com.duyvv.kmadoc.base.BaseViewModel
-import com.duyvv.kmadoc.data.dto.request.GetListFormRequest
-import com.duyvv.kmadoc.data.model.FormModel
+import com.duyvv.kmadoc.data.usecase.CountFormsUseCase
 import com.duyvv.kmadoc.data.usecase.GetListFormsUseCase
 import com.duyvv.kmadoc.util.SharePreferenceExt
 import com.duyvv.kmadoc.util.onEachError
-import com.duyvv.kmadoc.util.toDomainModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,11 +14,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getAllFormsUseCase: GetListFormsUseCase
+    private val getAllFormsUseCase: GetListFormsUseCase,
+    private val countFormsUseCase: CountFormsUseCase
 ) : BaseViewModel() {
 
-    private val _listForm = MutableStateFlow<List<FormModel>>(emptyList())
-    val listForm = _listForm.asStateFlow()
+    /*private val _listForm = MutableStateFlow<List<FormModel>>(emptyList())
+    val listForm = _listForm.asStateFlow()*/
+
+    private val _countForms = MutableStateFlow<Int>(0)
+    val countForms = _countForms.asStateFlow()
 
     init {
         getListForm()
@@ -28,17 +30,13 @@ class HomeViewModel @Inject constructor(
 
     private fun getListForm() {
         val isAdmin = SharePreferenceExt.isAdminAccount
-        getAllFormsUseCase.execute(
-            studentId = if (isAdmin) null else SharePreferenceExt.userInfo.userId,
-            categoryId = null,
-            request = GetListFormRequest()
-        )
+        countFormsUseCase.execute()
             .onEachError {
                 showLoading(false)
 //                showError(it)
             }.onEach { response ->
                 showLoading(false)
-                _listForm.value = response.info?.map { it.toDomainModel() } ?: emptyList()
+                _countForms.value = response.data?.totalForms ?: 0
             }.launchIn(viewModelScopeExceptionHandler)
     }
 }

@@ -11,24 +11,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -42,15 +41,26 @@ fun SearchTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    hint: String = "Tìm kiếm"
+    hint: String = "Tìm kiếm",
+    isFocus: Boolean,
+    onFocusChange: (Boolean) -> Unit = {}
 ) {
     // Quản lý focus
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
-    var isFocused by remember { mutableStateOf(false) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     // Đổi màu viền khi focus
-    val borderColor = if (isFocused) colorResource(R.color.color_enabled) else Color.Gray
+    val borderColor = if (isFocus) colorResource(R.color.color_enabled) else Color.Gray
+
+    LaunchedEffect(isFocus) {
+        if (isFocus) {
+            focusRequester.requestFocus()
+        } else {
+            keyboardController?.hide()
+            focusManager.clearFocus()
+        }
+    }
 
     Box {
         BasicTextField(
@@ -60,14 +70,20 @@ fun SearchTextField(
                 .fillMaxWidth()
                 .height(50.dp)
                 .focusRequester(focusRequester)
-                .focusTarget()
                 .onFocusChanged { focusState ->
-                    isFocused = focusState.isFocused
+                    onFocusChange(focusState.isFocused)
                 },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Next,
-                keyboardType = KeyboardType.Text
+                imeAction = ImeAction.Search,
+                keyboardType = KeyboardType.Text,
+            ),
+            keyboardActions = KeyboardActions(
+                onSearch = {
+                    onFocusChange(false)
+                    focusManager.clearFocus()
+                    keyboardController?.hide()
+                }
             ),
             decorationBox = { innerTextField ->
                 Row(
@@ -110,6 +126,7 @@ fun Pre(modifier: Modifier = Modifier) {
     SearchTextField(
         "",
         onValueChange = {},
-        modifier = modifier
+        modifier = modifier,
+        isFocus = false
     )
 }

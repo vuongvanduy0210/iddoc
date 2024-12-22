@@ -30,10 +30,8 @@ class CreateFormViewModel @Inject constructor(
     private val isValidateBaseInfo = createFormModel.map {
         it.fullName.isNotEmpty() && it.phoneNumber.isNotEmpty() && it.major.isNotEmpty()
                 && it.mClass.isNotEmpty() && it.studentId.isNotEmpty()
-                && it.birthday.isNotEmpty() && it.personalId.isNotEmpty()
-                && it.gender.isNotEmpty() && it.dateCCCD.isNotEmpty()
-                && it.addressCCCD.isNotEmpty() && it.address.isNotEmpty() && it.formDate.isNotEmpty()
-
+                && it.birthday.isNotEmpty()
+                && it.gender.isNotEmpty() && it.address.isNotEmpty() && it.formDate.isNotEmpty()
     }
 
     fun isValidateInput(type: FormType?) = when (type) {
@@ -67,12 +65,13 @@ class CreateFormViewModel @Inject constructor(
     private val isValidateDropOut = createFormModel.map {
         it.parentName.isNotEmpty() && it.parentPhone.isNotEmpty() &&
                 it.parentAddress.isNotEmpty() && it.dropOffDate.isNotEmpty() &&
-                it.dropOffReason.isNotEmpty()
+                it.dropOffReason.isNotEmpty() && it.personalId.isNotEmpty() && it.dateCCCD.isNotEmpty() && it.addressCCCD.isNotEmpty()
     }
     private val isValidateContinueStudy = createFormModel.map {
         it.pronouncementNumber.isNotEmpty() && it.signDate.isNotEmpty() &&
                 it.reservedDate.isNotEmpty() && it.reservedMonth.isNotEmpty() &&
                 it.continueStudyDate.isNotEmpty() && it.semester.isNotEmpty() && it.schoolYear.isNotEmpty()
+                && it.personalId.isNotEmpty() && it.dateCCCD.isNotEmpty() && it.addressCCCD.isNotEmpty()
     }
 
     private val isValidateBHYT = createFormModel.map {

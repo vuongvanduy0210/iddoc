@@ -6,7 +6,8 @@
     <color name="textSecondary">#494949</color>
     <color name="colorApproved">#17A626</color>
     <color name="colorStaging">#CD9921</color>
-
+    <color name="gray600">#757575</color>
+    <color name="gray700">#898989</color>
     <color name="primary_color">#2C3D7A</color>
 
     <color name="color_enabled">#2C3D7A</color> <!-- Màu khi button được enable -->

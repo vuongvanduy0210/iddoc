@@ -2,12 +2,15 @@ package com.duyvv.kmadoc.data.repository
 
 import com.duyvv.kmadoc.data.dto.request.BaseCreateFormRequest
 import com.duyvv.kmadoc.data.dto.request.GetListFormRequest
+import com.duyvv.kmadoc.data.dto.request.StatisticsRequest
 import com.duyvv.kmadoc.data.dto.request.UpdateStatusFormRequest
 import com.duyvv.kmadoc.data.dto.request.UploadFormRequest
 import com.duyvv.kmadoc.data.dto.response.BaseCRUDFormResponse
+import com.duyvv.kmadoc.data.dto.response.CountFormsResponse
 import com.duyvv.kmadoc.data.dto.response.CreateFormResponse
 import com.duyvv.kmadoc.data.dto.response.FormTypesResponse
 import com.duyvv.kmadoc.data.dto.response.ListFormResponse
+import com.duyvv.kmadoc.data.dto.response.StatisticsResponse
 import com.duyvv.kmadoc.data.dto.response.UpdateStatusFormResponse
 import com.duyvv.kmadoc.data.remote.service.FormManagementService
 import com.duyvv.kmadoc.util.DEFAULT_ERROR_MESSAGE
@@ -44,6 +47,10 @@ interface FormManagementRepository {
     ): Result<BaseCRUDFormResponse>
 
     suspend fun deleteForm(formId: String): Result<BaseCRUDFormResponse>
+
+    suspend fun getStatisticsForm(request: StatisticsRequest): Result<StatisticsResponse>
+
+    suspend fun countForms(): Result<CountFormsResponse>
 }
 
 class FormManagementRepositoryImpl @Inject constructor(
@@ -145,6 +152,30 @@ class FormManagementRepositoryImpl @Inject constructor(
     override suspend fun deleteForm(formId: String): Result<BaseCRUDFormResponse> {
         return runCatching {
             service.deleteForm(formId)
+        }.mapCatching {
+            if (it.message == "Successfull") {
+                it
+            } else {
+                throw Exception(it.message ?: DEFAULT_ERROR_MESSAGE)
+            }
+        }
+    }
+
+    override suspend fun getStatisticsForm(request: StatisticsRequest): Result<StatisticsResponse> {
+        return runCatching {
+            service.getStatisticsForm(request)
+        }.mapCatching {
+            if (it.message == "Successfull") {
+                it
+            } else {
+                throw Exception(it.message ?: DEFAULT_ERROR_MESSAGE)
+            }
+        }
+    }
+
+    override suspend fun countForms(): Result<CountFormsResponse> {
+        return runCatching {
+            service.countForms()
         }.mapCatching {
             if (it.message == "Successfull") {
                 it

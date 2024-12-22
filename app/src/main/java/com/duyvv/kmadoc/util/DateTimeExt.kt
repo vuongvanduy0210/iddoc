@@ -42,3 +42,15 @@ fun Fragment.openPickDate(onPicked: (String) -> Unit) {
 
     datePicker.show(childFragmentManager, datePicker.toString())
 }
+
+fun formatFromDateToDateString(startDate: String, endDate: String): String {
+    return if (startDate.isNotEmpty() && endDate.isNotEmpty()) {
+        "Từ $startDate đến $endDate"
+    } else if (startDate.isNotEmpty()) {
+        "Từ $startDate"
+    } else if (endDate.isNotEmpty()) {
+        "Đến $endDate"
+    } else {
+        "Thời gian"
+    }
+}

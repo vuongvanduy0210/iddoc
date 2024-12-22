@@ -15,10 +15,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, BaseViewModel>(
 
     override val viewModel: BaseViewModel by viewModels()
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_splash
-    }
-
     override fun initView() {
         super.initView()
         lifecycleScope.launch {

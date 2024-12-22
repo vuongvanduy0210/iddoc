@@ -27,10 +27,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
 
     override val viewModel: HomeViewModel by viewModels()
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_home
-    }
-
     override fun initView() {
         super.initView()
         binding.tvUserName.text = SharePreferenceExt.userInfo.username
@@ -45,9 +41,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     @SuppressLint("SetTextI18n")
     override fun addObserver() {
         super.addObserver()
-        viewModel.listForm.onEach { response ->
+        viewModel.countForms.onEach { response ->
             response.let {
-                binding.tvFileResultCount.text = "${it.size} đơn"
+                binding.tvFileResultCount.text = "$it đơn"
             }
         }.launchIn(lifecycleScope)
     }

@@ -9,5 +9,13 @@ data class GetListFormRequest(
     @SerializedName("keySearch")
     val keySearch: String = "",
     @SerializedName("limit")
-    val limit: Int = 0
+    val limit: Int = 0,
+    @SerializedName("status")
+    val status: List<String> = listOf(),
+    @SerializedName("categoryIds")
+    val types: List<String> = listOf(),
+    @SerializedName("fromDate")
+    val startDate: String = "",
+    @SerializedName("toDate")
+    val endDate: String = ""
 )

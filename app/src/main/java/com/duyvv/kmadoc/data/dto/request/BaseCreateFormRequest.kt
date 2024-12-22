@@ -19,12 +19,6 @@ open class BaseCreateFormRequest(
     var birthday: String = "",
     @SerializedName("STUDENT_GENDER")
     var gender: String = "",
-    @SerializedName("STUDENT_CITIZEN_IDENTIFICATION")
-    var personalCode: String = "",
-    @SerializedName("STUDENT_CITIZEN_IDENTIFICATION_VALID_DATE")
-    var dateCCCD: String = "",
-    @SerializedName("STUDENT_CITIZEN_IDENTIFICATION_ISSUED_LOCATION")
-    var addressCCCD: String = "",
     @SerializedName("PERMANENT_RESIDENT")
     var address: String = ""
 )

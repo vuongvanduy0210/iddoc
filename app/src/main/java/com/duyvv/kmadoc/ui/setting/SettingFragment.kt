@@ -17,10 +17,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding, AuthViewModel>(
 
     override val viewModel: AuthViewModel by viewModels()
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_setting
-    }
-
     override fun addAction() {
         super.addAction()
         binding.btSignOut.setOnClickListener {
@@ -45,7 +41,11 @@ class SettingFragment : BaseFragment<FragmentSettingBinding, AuthViewModel>(
         }
 
         binding.btManageDomain.setOnClickListener {
-            findNavController().navigate(R.id.fragmentConfigDomain)
+            navigate(R.id.fragmentConfigDomain)
+        }
+
+        binding.btStatistic.setOnClickListener {
+            navigate(R.id.statisticFragment)
         }
 
         binding.root.setOnClickListener {

@@ -9,6 +9,7 @@ import com.duyvv.kmadoc.data.dto.response.FieldDTO
 import com.duyvv.kmadoc.data.dto.response.FormResponse
 import com.duyvv.kmadoc.data.dto.response.FormResponseDTO
 import com.duyvv.kmadoc.data.dto.response.OCRFormResponse
+import com.duyvv.kmadoc.data.dto.response.StatisticDTO
 import com.duyvv.kmadoc.data.dto.response.StudentDTO
 import com.duyvv.kmadoc.data.model.CreateFormModel
 import com.duyvv.kmadoc.data.model.Field
@@ -16,6 +17,7 @@ import com.duyvv.kmadoc.data.model.FormModel
 import com.duyvv.kmadoc.data.model.FormStatus
 import com.duyvv.kmadoc.data.model.FormType
 import com.duyvv.kmadoc.data.model.FormTypeModel
+import com.duyvv.kmadoc.data.model.StatisticModel
 import com.duyvv.kmadoc.data.model.Student
 
 
@@ -28,9 +30,6 @@ fun CreateFormModel.toBaseCreateFormRequest(): BaseCreateFormRequest {
         studentCode = studentId,
         birthday = birthday,
         gender = gender,
-        personalCode = personalId,
-        dateCCCD = dateCCCD,
-        addressCCCD = addressCCCD,
         address = address,
         formDate = formDate
     )
@@ -71,9 +70,6 @@ fun CreateFormModel.toStudentHealthRequest(): CreateStudentHealthFormRequest {
         studentCode = this@toStudentHealthRequest.studentId
         birthday = this@toStudentHealthRequest.birthday
         gender = this@toStudentHealthRequest.gender
-        personalCode = this@toStudentHealthRequest.personalId
-        dateCCCD = this@toStudentHealthRequest.dateCCCD
-        addressCCCD = this@toStudentHealthRequest.addressCCCD
         address = this@toStudentHealthRequest.address
         formDate = this@toStudentHealthRequest.formDate
     }
@@ -114,9 +110,6 @@ fun FormModel.toBaseCreateFormRequest(): BaseCreateFormRequest {
         studentCode = getContentByFieldName(STUDENT_ID),
         birthday = getContentByFieldName(STUDENT_BIRTH_DATE),
         gender = getContentByFieldName(STUDENT_GENDER),
-        personalCode = getContentByFieldName(STUDENT_CITIZEN_IDENTIFICATION),
-        dateCCCD = getContentByFieldName(STUDENT_CITIZEN_IDENTIFICATION_VALID_DATE),
-        addressCCCD = getContentByFieldName(STUDENT_CITIZEN_IDENTIFICATION_ISSUED_LOCATION),
         address = getContentByFieldName(PERMANENT_RESIDENT)
     )
 }
@@ -157,9 +150,6 @@ fun FormModel.toStudentHealthRequest(): CreateStudentHealthFormRequest {
         studentCode = getContentByFieldName(STUDENT_ID)
         birthday = getContentByFieldName(STUDENT_BIRTH_DATE)
         gender = getContentByFieldName(STUDENT_GENDER)
-        personalCode = getContentByFieldName(STUDENT_CITIZEN_IDENTIFICATION)
-        dateCCCD = getContentByFieldName(STUDENT_CITIZEN_IDENTIFICATION_VALID_DATE)
-        addressCCCD = getContentByFieldName(STUDENT_CITIZEN_IDENTIFICATION_ISSUED_LOCATION)
         address = getContentByFieldName(PERMANENT_RESIDENT)
     }
 }
@@ -244,6 +234,15 @@ fun StudentDTO.toDomainModel(): Student {
         studentCode = this.studentCode ?: "",
         studentId = this.studentId ?: "",
         username = this.username ?: ""
+    )
+}
+
+fun StatisticDTO.toStatisticModel(): StatisticModel {
+    return StatisticModel(
+        totalForm = this@toStatisticModel.totalForms ?: 0f,
+        categoryId = this@toStatisticModel.categoryId ?: "",
+        formType = FormType.entries.find { it.id == this@toStatisticModel.categoryId }
+            ?: FormType.THOI_HOC
     )
 }
 

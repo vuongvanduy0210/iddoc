@@ -12,7 +12,6 @@ import com.duyvv.kmadoc.util.SharePreferenceExt
 import com.duyvv.kmadoc.util.animateViewFromBottom
 import com.duyvv.kmadoc.util.gone
 import com.duyvv.kmadoc.util.hideViewToTop
-import com.duyvv.kmadoc.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,12 +45,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             val shouldShowBottomNav = des.id in listOf(R.id.homeFragment, R.id.settingFragment)
             if (isShowBottomNav != shouldShowBottomNav) {
                 if (shouldShowBottomNav) {
-                    binding.bottomNav.visible()
                     binding.bottomNav.animateViewFromBottom()
-                    if (SharePreferenceExt.isAdminAccount) {
-                        binding.btScan.visible()
-                        binding.btScan.animateViewFromBottom()
-                    }
+                    binding.btScan.animateViewFromBottom()
                 } else {
                     binding.bottomNav.hideViewToTop()
                     binding.btScan.hideViewToTop()

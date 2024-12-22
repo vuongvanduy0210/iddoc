@@ -81,8 +81,6 @@ abstract class BaseDialog<VB : ViewBinding, ViewModel : BaseViewModel>(
         addData()
     }
 
-    protected abstract fun getLayoutId(): Int
-
     protected open fun initView() {
     }
 

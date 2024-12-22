@@ -168,31 +168,6 @@ fun DemoInfoScreen(
             viewModel.updateData(STUDENT_GENDER, it)
         }
         BaseInputTextFiled(
-            hint = "Số CCCD",
-            value = formModel.getContentByFieldName(STUDENT_CITIZEN_IDENTIFICATION),
-            onValueChange = {
-                viewModel.updateData(STUDENT_CITIZEN_IDENTIFICATION, it)
-            },
-            readOnly = !isEditable,
-            keyboardType = KeyboardType.Number
-        )
-        BaseInputTextFiled(
-            hint = "Ngày cấp CCCD",
-            value = formModel.getContentByFieldName(STUDENT_CITIZEN_IDENTIFICATION_VALID_DATE),
-            onValueChange = {},
-            readOnly = !isEditable,
-            endIconRes = R.drawable.ic_calendar_outlined,
-            onClickEndIcon = onClickSelectDateCCCD
-        )
-        BaseInputTextFiled(
-            hint = "Nơi cấp CCCD",
-            value = formModel.getContentByFieldName(STUDENT_CITIZEN_IDENTIFICATION_ISSUED_LOCATION),
-            onValueChange = {
-                viewModel.updateData(STUDENT_CITIZEN_IDENTIFICATION_ISSUED_LOCATION, it)
-            },
-            readOnly = !isEditable
-        )
-        BaseInputTextFiled(
             hint = "Hộ khẩu thường trú",
             value = formModel.getContentByFieldName(PERMANENT_RESIDENT),
             onValueChange = {
@@ -206,7 +181,8 @@ fun DemoInfoScreen(
                 DropOutContent(
                     viewModel = viewModel,
                     onClickSelectDropOutDate = onClickSelectDropOutDate,
-                    isEditable = isEditable
+                    isEditable = isEditable,
+                    onClickSelectDateCCCD = onClickSelectDateCCCD
                 )
             }
 
@@ -223,6 +199,15 @@ fun DemoInfoScreen(
                     onClickSelectContinueStudyDate = onClickSelectContinueStudyDate,
                     onClickSelectReservedDate = onClickSelectReservedDate,
                     onSelectSignDate = onSelectSignDate,
+                    isEditable = isEditable,
+                    onClickSelectDateCCCD = onClickSelectDateCCCD
+                )
+            }
+
+            FormType.CAP_LAI_THE_SINH_VIEN -> {
+                CCCDContent(
+                    viewModel = viewModel,
+                    onClickSelectDateCCCD = onClickSelectDateCCCD,
                     isEditable = isEditable
                 )
             }
@@ -250,9 +235,15 @@ fun DropOutContent(
     modifier: Modifier = Modifier,
     viewModel: DemoInfoViewModel,
     onClickSelectDropOutDate: () -> Unit,
+    onClickSelectDateCCCD: () -> Unit,
     isEditable: Boolean = false
 ) {
     val formModel by viewModel.formModel.collectAsStateWithLifecycle()
+    CCCDContent(
+        viewModel = viewModel,
+        onClickSelectDateCCCD = onClickSelectDateCCCD,
+        isEditable = isEditable
+    )
     BaseInputTextFiled(
         hint = "Họ và tên bố/mẹ",
         value = formModel.getContentByFieldName(PARENT_NAME),
@@ -301,10 +292,16 @@ fun ContinueStudyContent(
     viewModel: DemoInfoViewModel,
     onSelectSignDate: () -> Unit,
     onClickSelectReservedDate: () -> Unit,
+    onClickSelectDateCCCD: () -> Unit,
     onClickSelectContinueStudyDate: () -> Unit,
     isEditable: Boolean = false
 ) {
     val formModel by viewModel.formModel.collectAsStateWithLifecycle()
+    CCCDContent(
+        viewModel = viewModel,
+        onClickSelectDateCCCD = onClickSelectDateCCCD,
+        isEditable = isEditable
+    )
     BaseInputTextFiled(
         hint = "Quyết định số",
         value = formModel.getContentByFieldName(PRONOUNCEMENT_NUMBER),
@@ -382,6 +379,41 @@ fun StudentHealthContent(
         value = formModel.getContentByFieldName(CONTENT),
         onValueChange = {
             viewModel.updateData(CONTENT, it)
+        },
+        readOnly = !isEditable
+    )
+}
+
+@Composable
+fun CCCDContent(
+    modifier: Modifier = Modifier,
+    viewModel: DemoInfoViewModel,
+    onClickSelectDateCCCD: () -> Unit,
+    isEditable: Boolean = false
+) {
+    val formModel by viewModel.formModel.collectAsStateWithLifecycle()
+    BaseInputTextFiled(
+        hint = "Số CCCD",
+        value = formModel.getContentByFieldName(STUDENT_CITIZEN_IDENTIFICATION),
+        onValueChange = {
+            viewModel.updateData(STUDENT_CITIZEN_IDENTIFICATION, it)
+        },
+        readOnly = !isEditable,
+        keyboardType = KeyboardType.Number
+    )
+    BaseInputTextFiled(
+        hint = "Ngày cấp CCCD",
+        value = formModel.getContentByFieldName(STUDENT_CITIZEN_IDENTIFICATION_VALID_DATE),
+        onValueChange = {},
+        readOnly = !isEditable,
+        endIconRes = R.drawable.ic_calendar_outlined,
+        onClickEndIcon = onClickSelectDateCCCD
+    )
+    BaseInputTextFiled(
+        hint = "Nơi cấp CCCD",
+        value = formModel.getContentByFieldName(STUDENT_CITIZEN_IDENTIFICATION_ISSUED_LOCATION),
+        onValueChange = {
+            viewModel.updateData(STUDENT_CITIZEN_IDENTIFICATION_ISSUED_LOCATION, it)
         },
         readOnly = !isEditable
     )

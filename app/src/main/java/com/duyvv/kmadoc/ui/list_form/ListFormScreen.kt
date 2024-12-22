@@ -2,6 +2,7 @@ package com.duyvv.kmadoc.ui.list_form
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,11 +17,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,8 +44,11 @@ import com.duyvv.kmadoc.data.model.FormStatus
 import com.duyvv.kmadoc.data.model.FormType
 import com.duyvv.kmadoc.data.model.FormTypeModel
 import com.duyvv.kmadoc.data.model.Student
+import com.duyvv.kmadoc.ui.component.RoundedDropdownView
 import com.duyvv.kmadoc.ui.list_form.component.SearchTextField
 import com.duyvv.kmadoc.util.DateTimeExt
+import com.duyvv.kmadoc.util.formatFromDateToDateString
+import com.duyvv.kmadoc.util.nonAimClickable
 
 
 @Composable
@@ -48,13 +56,19 @@ fun ListFormScreen(
     modifier: Modifier = Modifier,
     viewModel: ListFormViewModel,
     onClickItem: (FormModel) -> Unit = {},
-    onClickBack: () -> Unit = {}
+    onClickBack: () -> Unit = {},
+    onClickFilterTime: () -> Unit = {},
+    onClickFilterType: () -> Unit = {},
 ) {
     val listForm by viewModel.listForm.collectAsStateWithLifecycle(emptyList())
+    var isFocusSearch by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White),
+            .background(Color.White)
+            .nonAimClickable {
+                isFocusSearch = false
+            },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
@@ -85,13 +99,46 @@ fun ListFormScreen(
         Spacer(Modifier.height(20.dp))
         SearchTextField(
             value = viewModel.keySearch.collectAsStateWithLifecycle().value,
-            onValueChange = viewModel::updateKeySearch,
-            modifier = modifier.padding(horizontal = 10.dp)
+            onValueChange = {
+                viewModel.updateKeySearch(it)
+            },
+            modifier = modifier.padding(horizontal = 10.dp),
+            onFocusChange = {
+                isFocusSearch = it
+            },
+            isFocus = isFocusSearch
         )
+        Spacer(Modifier.height(10.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 22.dp)
+                .horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RoundedDropdownView(
+                text = formatFromDateToDateString(
+                    viewModel.startDate.collectAsStateWithLifecycle().value,
+                    viewModel.endDate.collectAsStateWithLifecycle().value
+                ),
+                onClick = {
+                    onClickFilterTime.invoke()
+                    isFocusSearch = false
+                }
+            )
+            RoundedDropdownView(
+                text = "Loại đơn",
+                onClick = {
+                    onClickFilterType.invoke()
+                    isFocusSearch = false
+                }
+            )
+        }
         if (listForm.isEmpty()) {
             Spacer(Modifier.height(30.dp))
             Text(
-                "Không có đơn nào, hãy tạo thêm đơn!",
+                "Không có đơn nào!",
                 color = Color.Black,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
@@ -212,5 +259,16 @@ fun Pre1(modifier: Modifier = Modifier) {
         onClickItem = {
 
         }
+    )
+}
+
+@Composable
+@Preview(showBackground = true)
+fun Pre2(modifier: Modifier = Modifier) {
+    RoundedDropdownView(
+        text = "Thời gian"
+    )
+    RoundedDropdownView(
+        text = "Loại đơn"
     )
 }

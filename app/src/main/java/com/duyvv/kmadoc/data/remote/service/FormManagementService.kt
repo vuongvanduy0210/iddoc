@@ -4,15 +4,18 @@ import com.duyvv.kmadoc.data.dto.request.AdminLoginRequest
 import com.duyvv.kmadoc.data.dto.request.BaseCreateFormRequest
 import com.duyvv.kmadoc.data.dto.request.GetListFormRequest
 import com.duyvv.kmadoc.data.dto.request.SignUpRequest
+import com.duyvv.kmadoc.data.dto.request.StatisticsRequest
 import com.duyvv.kmadoc.data.dto.request.StudentLoginRequest
 import com.duyvv.kmadoc.data.dto.request.UpdateStatusFormRequest
 import com.duyvv.kmadoc.data.dto.request.UploadFormRequest
 import com.duyvv.kmadoc.data.dto.response.BaseCRUDFormResponse
+import com.duyvv.kmadoc.data.dto.response.CountFormsResponse
 import com.duyvv.kmadoc.data.dto.response.CreateFormResponse
 import com.duyvv.kmadoc.data.dto.response.FormTypesResponse
 import com.duyvv.kmadoc.data.dto.response.ListFormResponse
 import com.duyvv.kmadoc.data.dto.response.LoginResponse
 import com.duyvv.kmadoc.data.dto.response.SignUpResponse
+import com.duyvv.kmadoc.data.dto.response.StatisticsResponse
 import com.duyvv.kmadoc.data.dto.response.UpdateStatusFormResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -111,5 +114,15 @@ class FormManagementService @Inject constructor(private val client: HttpClient) 
 
     suspend fun deleteForm(formId: String): BaseCRUDFormResponse {
         return client.delete("v1/forms/$formId").body()
+    }
+
+    suspend fun getStatisticsForm(request: StatisticsRequest): StatisticsResponse {
+        return client.post("v1/forms/statistic/group-by-category") {
+            setBody(request)
+        }.body()
+    }
+
+    suspend fun countForms(): CountFormsResponse {
+        return client.get("v1/forms/statistic/count").body()
     }
 }

@@ -5,7 +5,6 @@ import android.net.Uri
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.duyvv.kmadoc.R
 import com.duyvv.kmadoc.base.BaseFragment
 import com.duyvv.kmadoc.data.model.FormTypeModel
 import com.duyvv.kmadoc.databinding.FragmentCropImageBinding
@@ -24,10 +23,6 @@ class CropImageFragment : BaseFragment<FragmentCropImageBinding, CameraViewModel
 ) {
 
     override val viewModel: CameraViewModel by viewModels()
-
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_crop_image
-    }
 
     override fun initView() {
         super.initView()

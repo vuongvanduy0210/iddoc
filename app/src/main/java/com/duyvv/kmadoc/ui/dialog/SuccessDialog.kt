@@ -1,6 +1,5 @@
 package com.duyvv.kmadoc.ui.dialog
 
-import com.duyvv.kmadoc.R
 import com.duyvv.kmadoc.base.BaseDialog
 import com.duyvv.kmadoc.base.BaseViewModel
 import com.duyvv.kmadoc.databinding.DialogSuccessBinding
@@ -15,10 +14,6 @@ class SuccessDialog : BaseDialog<DialogSuccessBinding, BaseViewModel>(
 
     private var title: String? = null
     private var onDismiss: () -> Unit = {}
-
-    override fun getLayoutId(): Int {
-        return R.layout.dialog_success
-    }
 
     override fun initView() {
         binding.tvMessage.text = title

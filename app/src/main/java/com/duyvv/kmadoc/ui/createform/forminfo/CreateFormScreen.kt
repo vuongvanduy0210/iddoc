@@ -1,22 +1,14 @@
 package com.duyvv.kmadoc.ui.createform.forminfo
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.focusable
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,11 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -141,33 +129,6 @@ fun CreateFormScreen(
             }
         }
         BaseInputTextFiled(
-            hint = "Số CCCD",
-            value = createFormModel.personalId,
-            onValueChange = { result ->
-                viewModel.createFormModel.update {
-                    it.copy(personalId = result)
-                }
-            },
-            keyboardType = KeyboardType.Number
-        )
-        BaseInputTextFiled(
-            hint = "Ngày cấp CCCD",
-            value = createFormModel.dateCCCD,
-            onValueChange = {},
-            endIconRes = R.drawable.ic_calendar_outlined,
-            onClickEndIcon = onClickSelectPersonalIdDate
-        )
-        BaseInputTextFiled(
-            hint = "Nơi cấp CCCD",
-            value = createFormModel.addressCCCD,
-            onValueChange = { result ->
-                viewModel.createFormModel.update {
-                    it.copy(addressCCCD = result)
-                }
-            },
-            singleLine = false
-        )
-        BaseInputTextFiled(
             hint = "Hộ khẩu thường trú",
             value = createFormModel.address,
             onValueChange = { result ->
@@ -181,7 +142,8 @@ fun CreateFormScreen(
             FormType.THOI_HOC -> {
                 DropOutContent(
                     viewModel = viewModel,
-                    onClickSelectDropOutDate = onClickSelectDropOutDate
+                    onClickSelectDropOutDate = onClickSelectDropOutDate,
+                    onClickSelectPersonalIdDate = onClickSelectPersonalIdDate
                 )
             }
 
@@ -196,11 +158,21 @@ fun CreateFormScreen(
                     viewModel = viewModel,
                     onClickSelectContinueStudyDate = onClickSelectContinueStudyDate,
                     onClickSelectReservedDate = onClickSelectReservedDate,
-                    onSelectSignDate = onSelectSignDate
+                    onSelectSignDate = onSelectSignDate,
+                    onClickSelectPersonalIdDate = onClickSelectPersonalIdDate
                 )
             }
 
-            else -> {}
+            FormType.CAP_LAI_THE_SINH_VIEN -> {
+                CCCDContent(
+                    viewModel = viewModel,
+                    onClickSelectPersonalIdDate = onClickSelectPersonalIdDate
+                )
+            }
+
+            else -> {
+
+            }
         }
         BaseButton(
             text = "Tạo đơn",
@@ -217,9 +189,14 @@ fun CreateFormScreen(
 fun DropOutContent(
     modifier: Modifier = Modifier,
     viewModel: CreateFormViewModel,
-    onClickSelectDropOutDate: () -> Unit
+    onClickSelectDropOutDate: () -> Unit,
+    onClickSelectPersonalIdDate: () -> Unit
 ) {
     val createFormModel by viewModel.createFormModel.collectAsStateWithLifecycle()
+    CCCDContent(
+        viewModel = viewModel,
+        onClickSelectPersonalIdDate = onClickSelectPersonalIdDate
+    )
     BaseInputTextFiled(
         hint = "Họ và tên bố/mẹ",
         value = createFormModel.parentName,
@@ -274,8 +251,13 @@ fun ContinueStudyContent(
     onSelectSignDate: () -> Unit,
     onClickSelectReservedDate: () -> Unit,
     onClickSelectContinueStudyDate: () -> Unit,
+    onClickSelectPersonalIdDate: () -> Unit
 ) {
     val createFormModel by viewModel.createFormModel.collectAsStateWithLifecycle()
+    CCCDContent(
+        viewModel = viewModel,
+        onClickSelectPersonalIdDate = onClickSelectPersonalIdDate
+    )
     BaseInputTextFiled(
         hint = "Quyết định số",
         value = createFormModel.pronouncementNumber,
@@ -356,6 +338,42 @@ fun StudentHealthContent(
         onValueChange = { result ->
             viewModel.createFormModel.update {
                 it.copy(bhytContent = result)
+            }
+        },
+        singleLine = false
+    )
+}
+
+@Composable
+fun CCCDContent(
+    modifier: Modifier = Modifier,
+    viewModel: CreateFormViewModel,
+    onClickSelectPersonalIdDate: () -> Unit
+) {
+    val createFormModel by viewModel.createFormModel.collectAsStateWithLifecycle()
+    BaseInputTextFiled(
+        hint = "Số CCCD",
+        value = createFormModel.personalId,
+        onValueChange = { result ->
+            viewModel.createFormModel.update {
+                it.copy(personalId = result)
+            }
+        },
+        keyboardType = KeyboardType.Number
+    )
+    BaseInputTextFiled(
+        hint = "Ngày cấp CCCD",
+        value = createFormModel.dateCCCD,
+        onValueChange = {},
+        endIconRes = R.drawable.ic_calendar_outlined,
+        onClickEndIcon = onClickSelectPersonalIdDate
+    )
+    BaseInputTextFiled(
+        hint = "Nơi cấp CCCD",
+        value = createFormModel.addressCCCD,
+        onValueChange = { result ->
+            viewModel.createFormModel.update {
+                it.copy(addressCCCD = result)
             }
         },
         singleLine = false

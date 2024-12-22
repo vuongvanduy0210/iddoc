@@ -11,6 +11,7 @@ import com.duyvv.kmadoc.data.model.UserInfo
 import com.duyvv.kmadoc.ui.dialog.DeleteDialog
 import com.duyvv.kmadoc.ui.dialog.SuccessDialog
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapNotNull
@@ -142,7 +143,10 @@ inline fun <reified T> T?.toJson(): String? {
 }
 
 inline fun <reified T> String?.fromJson(): T? {
-    return if (this.isNullOrEmpty()) null else Gson().fromJson(this, T::class.java)
+    return if (this.isNullOrEmpty()) null else {
+        val type = object : TypeToken<T>() {}.type
+        Gson().fromJson<T>(this, type)
+    }
 }
 
 fun Fragment.showSuccessDialog(title: String, onDismiss: () -> Unit) {

@@ -46,10 +46,6 @@ class CameraFragment : BaseFragment<FragmentCameraBinding, CameraViewModel>(
         }
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_camera
-    }
-
     override fun initView() {
         super.initView()
         viewModel.formTypeModel =

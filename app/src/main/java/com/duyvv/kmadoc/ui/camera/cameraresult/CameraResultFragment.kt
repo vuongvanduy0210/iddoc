@@ -30,10 +30,6 @@ class CameraResultFragment : BaseFragment<FragmentCameraResultBinding, CameraVie
 
     override val viewModel: CameraViewModel by viewModels()
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_camera_result
-    }
-
     override fun initView() {
         viewModel.initData(
             arguments?.getString(IMAGE_BITMAP_KEY).fromJson<Bitmap>(),

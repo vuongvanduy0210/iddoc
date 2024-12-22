@@ -87,10 +87,14 @@ class DemoInfoFragment : BaseNonBindingFragment<DemoInfoViewModel>() {
                     onClickUploadForm = {
                         val adminId = SharePreferenceExt.userInfo.userId
                         viewModel.typeModel?.id?.let {
-                            viewModel.uploadForm(
-                                adminId = adminId,
-                                categoryId = it
-                            )
+                            if (SharePreferenceExt.isAdminAccount) {
+                                viewModel.uploadForm(
+                                    adminId = adminId,
+                                    categoryId = it
+                                )
+                            } else {
+                                viewModel.createForm(viewModel.typeModel!!)
+                            }
                         }
                     },
                     onClickDeleteForm = {
