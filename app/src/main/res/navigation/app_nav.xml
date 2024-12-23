@@ -65,10 +65,17 @@
         android:id="@+id/demoInfoFragment"
         android:name="com.duyvv.kmadoc.ui.demoinfo.DemoInfoFragment"
         android:label="DemoInfoFragment" />
-
     <fragment
         android:id="@+id/statisticFragment"
         android:name="com.duyvv.kmadoc.ui.statistics.StatisticsFragment"
         tools:layout="@layout/fragment_statistics"
         android:label="StatisticsFragment" />
+    <fragment
+        android:id="@+id/changeInfoFragment"
+        android:name="com.duyvv.kmadoc.ui.changeuserinfo.changeinfo.ChangeInfoFragment"
+        android:label="ChangeInfoFragment" />
+    <fragment
+        android:id="@+id/changePassFragment"
+        android:name="com.duyvv.kmadoc.ui.changeuserinfo.changepass.ChangePasswordFragment"
+        android:label="ChangePassFragment"/>
 </navigation>

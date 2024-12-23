@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.duyvv.kmadoc.R
@@ -20,7 +21,8 @@ import com.duyvv.kmadoc.util.nonAimClickable
 fun BaseHeaderView(
     modifier: Modifier = Modifier,
     title: String = "",
-    onClickBack: () -> Unit
+    onClickBack: () -> Unit,
+    iconClose: Int = R.drawable.ic_back
 ) {
     Box(
         modifier = modifier
@@ -28,7 +30,7 @@ fun BaseHeaderView(
             .padding(vertical = 20.dp)
     ) {
         Icon(
-            painter = painterResource(R.drawable.ic_back),
+            painter = painterResource(iconClose),
             tint = colorResource(R.color.primary_color),
             contentDescription = null,
             modifier = Modifier
@@ -37,11 +39,23 @@ fun BaseHeaderView(
                 .nonAimClickable { onClickBack.invoke() }
         )
         Text(
-            "Đăng ký tài khoản",
+            title,
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
             color = colorResource(R.color.primary_color),
             modifier = Modifier.align(Alignment.Center)
         )
     }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun Pre(modifier: Modifier = Modifier) {
+    BaseHeaderView(
+        title = "Đăng ký tài khoản",
+        onClickBack = {
+
+        },
+        iconClose = R.drawable.ic_close_primary
+    )
 }

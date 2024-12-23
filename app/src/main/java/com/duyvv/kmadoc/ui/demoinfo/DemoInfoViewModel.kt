@@ -12,11 +12,10 @@ import com.duyvv.kmadoc.data.usecase.DeleteFormUseCase
 import com.duyvv.kmadoc.data.usecase.UpdateFormUseCase
 import com.duyvv.kmadoc.data.usecase.UpdateStatusFormUseCase
 import com.duyvv.kmadoc.data.usecase.UploadFormUseCase
-import com.duyvv.kmadoc.ui.createform.forminfo.CreateFormContract
 import com.duyvv.kmadoc.util.SharePreferenceExt
 import com.duyvv.kmadoc.util.onEachError
-import com.duyvv.kmadoc.util.toBaseCreateFormRequest
 import com.duyvv.kmadoc.util.toContinueStudyRequest
+import com.duyvv.kmadoc.util.toCreateStudentCardRequest
 import com.duyvv.kmadoc.util.toDropOutRequest
 import com.duyvv.kmadoc.util.toStudentHealthRequest
 import com.duyvv.kmadoc.util.updateOCRFormData
@@ -129,7 +128,7 @@ class DemoInfoViewModel @Inject constructor(
             }
 
             else -> {
-                _formModel.value.toBaseCreateFormRequest()
+                _formModel.value.toCreateStudentCardRequest()
             }
         }
     }
@@ -146,7 +145,7 @@ class DemoInfoViewModel @Inject constructor(
             showError(it)
         }.onEach {
             showLoading(false)
-            setState(CreateFormContract.FormInfoState.CreateFormSuccess)
+            sendEffect(DemoInfoContract.DemoInfoEffect.CreateFormSuccess)
         }.launchIn(viewModelScopeExceptionHandler)
     }
 }

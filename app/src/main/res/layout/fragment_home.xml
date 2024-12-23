@@ -10,11 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="10dp"
         android:adjustViewBounds="true"
         android:src="@drawable/img_home_banner"
-        app:layout_constraintBottom_toTopOf="@+id/bt_saved_cccd"
-        app:layout_constraintTop_toBottomOf="@+id/tvUserName"
-        tools:layout_editor_absoluteX="30dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
 
     <TextView
         android:id="@+id/textView"
@@ -110,9 +111,10 @@
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="20dp"
         app:cardBackgroundColor="#DBDBFF"
+        app:layout_constraintEnd_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:strokeWidth="0dp"
-        tools:layout_editor_absoluteX="30dp">
+        app:strokeWidth="0dp">
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -165,15 +167,67 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/btStatistic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        app:cardBackgroundColor="#DBDBFF"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/bt_saved_template"
+        app:layout_constraintStart_toStartOf="@+id/bt_saved_template"
+        app:layout_constraintTop_toBottomOf="@+id/bt_saved_template"
+        app:strokeWidth="0dp">
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="12dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_statistics" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Text.Caption.Semibold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thống kê"
+                    android:textColor="#2C3D7A"
+                    tools:ignore="HardcodedText" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_alt_arrow_right" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/bt_create_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         app:cardBackgroundColor="#DBDBFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/bt_saved_template"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/btStatistic"
+        app:layout_constraintStart_toStartOf="@+id/btStatistic"
+        app:layout_constraintTop_toBottomOf="@+id/btStatistic"
         app:strokeWidth="0dp">
 
 

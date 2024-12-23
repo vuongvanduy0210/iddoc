@@ -3,6 +3,7 @@ package com.duyvv.kmadoc.util
 import com.duyvv.kmadoc.data.dto.request.BaseCreateFormRequest
 import com.duyvv.kmadoc.data.dto.request.CreateContinueStudyFormRequest
 import com.duyvv.kmadoc.data.dto.request.CreateDropOutFormRequest
+import com.duyvv.kmadoc.data.dto.request.CreateStudentCardFormRequest
 import com.duyvv.kmadoc.data.dto.request.CreateStudentHealthFormRequest
 import com.duyvv.kmadoc.data.dto.response.ExtractedTextResponse
 import com.duyvv.kmadoc.data.dto.response.FieldDTO
@@ -33,6 +34,24 @@ fun CreateFormModel.toBaseCreateFormRequest(): BaseCreateFormRequest {
         address = address,
         formDate = formDate
     )
+}
+
+fun CreateFormModel.toCreateStudentCardRequest(): CreateStudentCardFormRequest {
+    return CreateStudentCardFormRequest(
+        personalCode = personalId,
+        dateCCCD = dateCCCD,
+        addressCCCD = addressCCCD
+    ).apply {
+        fullName = this@toCreateStudentCardRequest.fullName
+        phoneNumber = this@toCreateStudentCardRequest.phoneNumber
+        major = this@toCreateStudentCardRequest.major
+        mClass = this@toCreateStudentCardRequest.mClass
+        studentCode = this@toCreateStudentCardRequest.studentId
+        birthday = this@toCreateStudentCardRequest.birthday
+        gender = this@toCreateStudentCardRequest.gender
+        address = this@toCreateStudentCardRequest.address
+        formDate = this@toCreateStudentCardRequest.formDate
+    }
 }
 
 fun CreateFormModel.toDropOutRequest(): CreateDropOutFormRequest {
@@ -112,6 +131,24 @@ fun FormModel.toBaseCreateFormRequest(): BaseCreateFormRequest {
         gender = getContentByFieldName(STUDENT_GENDER),
         address = getContentByFieldName(PERMANENT_RESIDENT)
     )
+}
+
+fun FormModel.toCreateStudentCardRequest(): CreateStudentCardFormRequest {
+    return CreateStudentCardFormRequest(
+        personalCode = getContentByFieldName(STUDENT_CITIZEN_IDENTIFICATION),
+        dateCCCD = getContentByFieldName(STUDENT_CITIZEN_IDENTIFICATION_VALID_DATE),
+        addressCCCD = getContentByFieldName(STUDENT_CITIZEN_IDENTIFICATION_ISSUED_LOCATION)
+    ).apply {
+        formDate = getContentByFieldName(APPLICATION_DISTRICT_DATE)
+        fullName = getContentByFieldName(STUDENT_NAME)
+        phoneNumber = getContentByFieldName(STUDENT_PHONE_NUMBER)
+        major = getContentByFieldName(MAJOR)
+        mClass = getContentByFieldName(STUDENT_CLASS)
+        studentCode = getContentByFieldName(STUDENT_ID)
+        birthday = getContentByFieldName(STUDENT_BIRTH_DATE)
+        gender = getContentByFieldName(STUDENT_GENDER)
+        address = getContentByFieldName(PERMANENT_RESIDENT)
+    }
 }
 
 fun FormModel.toDropOutRequest(): CreateDropOutFormRequest {

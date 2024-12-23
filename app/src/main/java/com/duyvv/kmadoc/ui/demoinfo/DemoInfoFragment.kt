@@ -156,6 +156,18 @@ class DemoInfoFragment : BaseNonBindingFragment<DemoInfoViewModel>() {
                 Toasty.success(requireContext(), "Xóa đơn thành công").show()
                 findNavController().popBackStack()
             }
+
+            DemoInfoContract.DemoInfoEffect.CreateFormSuccess -> {
+                showSuccessDialog("Tạo đơn thành công") {
+                    navigate(
+                        id = R.id.homeFragment,
+                        popUpTo = R.id.homeFragment,
+                        popUpToBuilder = {
+                            inclusive = true
+                        }
+                    )
+                }
+            }
         }
     }
 

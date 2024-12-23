@@ -58,6 +58,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         binding.btCreateForm.setOnClickListener {
             navigate(R.id.selectFormTypeFragment)
         }
+
+        binding.btStatistic.setOnClickListener {
+            navigate(R.id.statisticFragment)
+        }
     }
 
     override fun onBackPressed(): Boolean {

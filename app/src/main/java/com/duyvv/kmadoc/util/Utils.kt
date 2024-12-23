@@ -6,6 +6,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.duyvv.kmadoc.data.model.FilterModel
 import com.duyvv.kmadoc.data.model.FormModel
 import com.duyvv.kmadoc.data.model.UserInfo
 import com.duyvv.kmadoc.ui.dialog.DeleteDialog
@@ -170,4 +171,12 @@ inline fun <reified T> Fragment.onFragmentResult(key: String, crossinline callba
     parentFragmentManager.setFragmentResultListener(key, viewLifecycleOwner) { _, bundle ->
         callback(bundle.getString(key).fromJson())
     }
+}
+
+fun List<FilterModel>.isSelectedAll(): Boolean {
+    return all { it.isSelected }
+}
+
+fun List<FilterModel>.noItemSelected(): Boolean {
+    return all { !it.isSelected }
 }

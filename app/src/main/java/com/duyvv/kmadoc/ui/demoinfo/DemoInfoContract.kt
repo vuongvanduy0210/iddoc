@@ -9,5 +9,6 @@ class DemoInfoContract {
         data object UploadFormSuccess : DemoInfoEffect()
         data object UpdateFormSuccess : DemoInfoEffect()
         data object DeleteFormSuccess : DemoInfoEffect()
+        data object CreateFormSuccess : DemoInfoEffect()
     }
 }

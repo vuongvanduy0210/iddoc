@@ -7,8 +7,8 @@ import com.duyvv.kmadoc.data.model.FormTypeModel
 import com.duyvv.kmadoc.data.usecase.CreateFormUseCase
 import com.duyvv.kmadoc.util.SharePreferenceExt
 import com.duyvv.kmadoc.util.onEachError
-import com.duyvv.kmadoc.util.toBaseCreateFormRequest
 import com.duyvv.kmadoc.util.toContinueStudyRequest
+import com.duyvv.kmadoc.util.toCreateStudentCardRequest
 import com.duyvv.kmadoc.util.toDropOutRequest
 import com.duyvv.kmadoc.util.toStudentHealthRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -88,7 +88,7 @@ class CreateFormViewModel @Inject constructor(
                 FormType.THOI_HOC -> createFormModel.value.toDropOutRequest()
                 FormType.CAP_LAI_THE_BHYT -> createFormModel.value.toStudentHealthRequest()
                 FormType.XIN_TIEP_TUC_HOC -> createFormModel.value.toContinueStudyRequest()
-                FormType.CAP_LAI_THE_SINH_VIEN -> createFormModel.value.toBaseCreateFormRequest()
+                FormType.CAP_LAI_THE_SINH_VIEN -> createFormModel.value.toCreateStudentCardRequest()
             }
         ).onEachError {
             showLoading(false)

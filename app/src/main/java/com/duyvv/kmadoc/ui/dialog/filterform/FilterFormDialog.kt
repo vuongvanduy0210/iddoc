@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.duyvv.kmadoc.base.BaseNonBindingBottomSheetDialog
 import com.duyvv.kmadoc.data.model.FilterModel
 import com.duyvv.kmadoc.util.fromJson
+import com.duyvv.kmadoc.util.noItemSelected
 import com.duyvv.kmadoc.util.toJson
 
 class FilterFormDialog : BaseNonBindingBottomSheetDialog<FilterViewModel>() {
@@ -36,14 +37,12 @@ class FilterFormDialog : BaseNonBindingBottomSheetDialog<FilterViewModel>() {
                         dismiss()
                     },
                     onClickApply = {
-                        val isSelectedAllType = viewModel.listType.value.all { it.isSelected }
-                        val isSelectedAllStatus = viewModel.listStatus.value.all { it.isSelected }
-                        val listType = if (isSelectedAllType) {
+                        val listType = if (viewModel.listType.value.noItemSelected()) {
                             viewModel.listType.value.map { it.copy(isSelected = true) }
                         } else {
                             viewModel.listType.value
                         }
-                        val listStatus = if (isSelectedAllStatus) {
+                        val listStatus = if (viewModel.listStatus.value.noItemSelected()) {
                             viewModel.listStatus.value.map { it.copy(isSelected = true) }
                         } else {
                             viewModel.listStatus.value
