@@ -2,6 +2,8 @@ package com.duyvv.kmadoc.util
 
 const val DEFAULT_ERROR_MESSAGE = "Lỗi không xác định"
 
+const val PAGE_SIZE = 10
+
 const val APPLICATION_DISTRICT_DATE = "APPLICATION_DISTRICT_DATE"
 const val STUDENT_NAME = "STUDENT_NAME"
 const val STUDENT_PHONE_NUMBER = "STUDENT_PHONE_NUMBER"

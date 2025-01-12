@@ -17,11 +17,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,10 +53,15 @@ import com.duyvv.kmadoc.data.model.Student
 import com.duyvv.kmadoc.ui.component.RoundedDropdownView
 import com.duyvv.kmadoc.ui.list_form.component.SearchTextField
 import com.duyvv.kmadoc.util.DateTimeExt
+import com.duyvv.kmadoc.util.LoadMoreHandler
+import com.duyvv.kmadoc.util.LoadingIndicator
 import com.duyvv.kmadoc.util.formatFromDateToDateString
 import com.duyvv.kmadoc.util.nonAimClickable
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListFormScreen(
     modifier: Modifier = Modifier,
@@ -62,6 +73,37 @@ fun ListFormScreen(
 ) {
     val listForm by viewModel.listForm.collectAsStateWithLifecycle(emptyList())
     var isFocusSearch by remember { mutableStateOf(false) }
+    val mviState by viewModel.mviState.collectAsStateWithLifecycle()
+    var isLoadMore by remember { mutableStateOf(false) }
+    var isShowPullRefresh by remember { mutableStateOf(false) }
+    LaunchedEffect(mviState) {
+        when (mviState) {
+            ListFormContract.ListFormState.RefreshItemLoading -> {
+                isShowPullRefresh = true
+                isLoadMore = false
+            }
+
+            ListFormContract.ListFormState.RefreshItemLoaded -> {
+                coroutineScope {
+                    delay(800)
+                    isShowPullRefresh = false
+                }
+                isLoadMore = false
+            }
+
+            ListFormContract.ListFormState.LoadMoreItemLoading -> {
+                isShowPullRefresh = false
+                isLoadMore = true
+            }
+
+            ListFormContract.ListFormState.LoadMoreItemLoaded -> {
+                isShowPullRefresh = false
+                isLoadMore = false
+            }
+
+            else -> {}
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -99,8 +141,9 @@ fun ListFormScreen(
         Spacer(Modifier.height(20.dp))
         SearchTextField(
             value = viewModel.keySearch.collectAsStateWithLifecycle().value,
+            hint = "Tên Sinh viên",
             onValueChange = {
-                viewModel.updateKeySearch(it)
+                viewModel.onEvent(ListFormContract.ListFormIntent.SearchItem(it))
             },
             modifier = modifier.padding(horizontal = 10.dp),
             onFocusChange = {
@@ -145,20 +188,53 @@ fun ListFormScreen(
             )
         } else {
             Spacer(Modifier.height(5.dp))
-            LazyColumn(
+            val listState = rememberLazyListState()
+            val pullRefreshState = rememberPullToRefreshState()
+            PullToRefreshBox(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp),
-                contentPadding = PaddingValues(top = 5.dp, bottom = 10.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
+                    .fillMaxSize(),
+                isRefreshing = isShowPullRefresh,
+                state = pullRefreshState,
+                onRefresh = {
+                    viewModel.onEvent(ListFormContract.ListFormIntent.RefreshItem)
+                },
+                indicator = {
+                    Indicator(
+                        modifier = Modifier.align(Alignment.TopCenter),
+                        isRefreshing = isShowPullRefresh,
+                        state = pullRefreshState
+                    )
+                }
             ) {
-                itemsIndexed(
-                    items = listForm,
-                    key = { index, _ ->
-                        index
+                if (isShowPullRefresh) {
+                    LoadingIndicator()
+                } else {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp),
+                        state = listState,
+                        contentPadding = PaddingValues(top = 5.dp, bottom = 10.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        itemsIndexed(
+                            items = listForm,
+                            key = { index, _ ->
+                                index
+                            }
+                        ) { index, item ->
+                            FormItem(item = item, modifier = modifier, onClickItem = onClickItem)
+                        }
+                        if (isLoadMore) {
+                            item { LoadingIndicator() }
+                        }
                     }
-                ) { index, item ->
-                    FormItem(item = item, modifier = modifier, onClickItem = onClickItem)
+
+                    LoadMoreHandler(listState = listState) {
+                        if (!viewModel.endReached && !isLoadMore) {
+                            viewModel.onEvent(ListFormContract.ListFormIntent.LoadMoreItem)
+                        }
+                    }
                 }
             }
         }

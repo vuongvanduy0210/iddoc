@@ -22,8 +22,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.duyvv.kmadoc.R
 import com.duyvv.kmadoc.ui.component.BaseButton
 import com.duyvv.kmadoc.ui.component.BaseHeaderView
-import com.duyvv.kmadoc.ui.component.PasswordTextField
 import com.duyvv.kmadoc.ui.component.BaseInputTextFiled
+import com.duyvv.kmadoc.ui.component.PasswordTextField
 import com.duyvv.kmadoc.util.nonAimClickable
 
 @Composable
@@ -39,7 +39,8 @@ fun SignUpScreen(
     ) {
         BaseHeaderView(
             modifier = modifier.align(Alignment.TopCenter),
-            onClickBack = onClickBack
+            onClickBack = onClickBack,
+            title = "Đăng ký tài khoản"
         )
         Column(
             modifier = modifier

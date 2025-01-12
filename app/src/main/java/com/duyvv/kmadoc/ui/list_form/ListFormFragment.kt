@@ -59,14 +59,20 @@ class ListFormFragment : BaseNonBindingFragment<ListFormViewModel>() {
                             startDate = viewModel.startDate.value,
                             endDate = viewModel.endDate.value,
                             onClickCancelFilter = {
-                                viewModel.updateStartDate("")
-                                viewModel.updateEndDate("")
-                                viewModel.getListFormFilterTime()
+                                viewModel.onEvent(
+                                    ListFormContract.ListFormIntent.FilterTime(
+                                        "",
+                                        ""
+                                    )
+                                )
                             },
                             onApply = { startDate, endDate ->
-                                viewModel.updateStartDate(startDate)
-                                viewModel.updateEndDate(endDate)
-                                viewModel.getListFormFilterTime()
+                                viewModel.onEvent(
+                                    ListFormContract.ListFormIntent.FilterTime(
+                                        startDate,
+                                        endDate
+                                    )
+                                )
                             }
                         ).show(parentFragmentManager, "")
                     },
@@ -75,9 +81,12 @@ class ListFormFragment : BaseNonBindingFragment<ListFormViewModel>() {
                             listSelectedType = viewModel.listType,
                             listSelectedStatus = viewModel.listStatus,
                         ) { listSelectedType, listSelectedStatus ->
-                            viewModel.listType = listSelectedType
-                            viewModel.listStatus = listSelectedStatus
-                            viewModel.getListFormFilterType()
+                            viewModel.onEvent(
+                                ListFormContract.ListFormIntent.FilterType(
+                                    listSelectedType,
+                                    listSelectedStatus
+                                )
+                            )
                         }.show(parentFragmentManager, "")
                     }
                 )
@@ -99,6 +108,6 @@ class ListFormFragment : BaseNonBindingFragment<ListFormViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getListForms()
+        viewModel.onEvent(ListFormContract.ListFormIntent.FirstLoadItem)
     }
 }
